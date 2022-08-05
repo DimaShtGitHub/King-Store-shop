@@ -3,22 +3,40 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
-const PORT = process.env.PORT ?? 3002;
+const PORT = process.env.PORT ?? 3001;
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));  
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const sessionConfig = {
+  name: 'King-Store',
+  store: new FileStore(),
+  secret: process.env.SESSION_SECRET ?? 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 * 3 },
+};
+
+app.use(session(sessionConfig))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
