@@ -1,0 +1,6 @@
+.FormReg {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(132, 83, 187);
+    color: white;
+}
