@@ -13,6 +13,7 @@ Desired stack:
         Container Query
         Fetch + then, catch
         Yandex Карты
+        React-hook-form
     }
 
     UI {
