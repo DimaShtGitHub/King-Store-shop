@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 
 const createError = require('http-errors');
@@ -11,6 +12,7 @@ const FileStore = require('session-file-store')(session);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const regRouter = require('./routes/reg/regRouter')
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
@@ -40,8 +42,10 @@ const sessionConfig = {
 
 app.use(session(sessionConfig))
 
+/* Routes  */
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/reg', regRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
